@@ -2,6 +2,11 @@
 
 Docker compose configuration for running Borgmatic on ubuntu server
 
+## Requirements
+
+* Docker
+* Docker compose
+
 ## Set Up
 
 Clone this repository
