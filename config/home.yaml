@@ -19,11 +19,10 @@ one_file_system: true
 compression: lz4
 archive_name_format: 'backup-home-{now:%Y-%m-%d-%H%M%S}'
 
-keep_hourly: 24
 keep_daily: 31
 keep_weekly: 13
 keep_monthly: 12
-keep_yearly: 2
+keep_yearly: 1
 
 checks:
   - name: spot

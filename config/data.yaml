@@ -29,9 +29,8 @@ one_file_system: true
 compression: lz4
 archive_name_format: 'backup-data-{now:%Y-%m-%d-%H%M%S}'
 
-keep_daily: 7
 keep_weekly: 4
-keep_monthly: 12
+keep_monthly: 6
 keep_yearly: 1
 
 checks:
