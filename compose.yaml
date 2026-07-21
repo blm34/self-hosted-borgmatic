@@ -19,5 +19,11 @@ services:
     environment:
       TZ: 'Europe/London'
       BORG_PASSPHRASE: ${BORG_PASSPHRASE}
+    healthcheck:
+      test: ["CMD", "borgmatic", "config", "validate"]
+      interval: 1h
+      timeout: 30s
+      retries: 3
+      start_period: 30s
     restart: unless-stopped
 
