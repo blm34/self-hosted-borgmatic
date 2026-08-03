@@ -1,14 +1,30 @@
 services:
-  borgmatic:
+  borg-restore:
+    image: ghcr.io/borgmatic-collective/borgmatic
     container_name: borg-restore
+
     cap_add:
       - SYS_ADMIN
-    volumes:
-      - /host/mount/location:/restore
+
+    devices:
+      - /dev/fuse:/dev/fuse
+
     security_opt:
       - apparmor:unconfined
       - label:disable
-    devices:
-      - /dev/fuse:/dev/fuse
-    command: /bin/sh
+
+    volumes:
+      # The Borg repositories
+      - ${BACKUP_LOCATION}:/mnt/borg-repository
+
+      # Borgmatic configuration
+      - ./borg_state:/root/.local/state/borgmatic
+      - ./borg_config:/root/.config/borg
+      - ./borg_cache:/root/.cache/borg
+
+      # Restore location
+      - /tmp/borg-restore:/restore
+
+    environment:
+      BORG_PASSPHRASE: ${BORG_PASSPHRASE}
 
