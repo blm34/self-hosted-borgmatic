@@ -2,7 +2,9 @@ services:
   borgmatic:
     image: ghcr.io/borgmatic-collective/borgmatic
     container_name: borgmatic
+
     volumes:
+      # Directories for backing up
       - /home:/mnt/source/home:ro
       - /etc:/mnt/source/etc:ro
       - /var:/mnt/source/var:ro
@@ -10,20 +12,26 @@ services:
       - /root:/mnt/source/root:ro
       - /opt:/mnt/source/opt:ro
       
+      # The Borg repositories
       - ${BACKUP_LOCATION}:/mnt/borg-repository
+
+      # Borgmatic configuration
       - ./config:/etc/borgmatic.d/
       - ./borg_state:/root/.local/state/borgmatic
       - ./borg_config:/root/.config/borg
       - ./borg_cache:/root/.cache/borg
       - ./logs:/var/log/borgmatic
+
     environment:
       TZ: 'Europe/London'
       BORG_PASSPHRASE: ${BORG_PASSPHRASE}
+
     healthcheck:
       test: ["CMD", "borgmatic", "config", "validate"]
       interval: 1h
       timeout: 30s
       retries: 3
       start_period: 30s
+
     restart: unless-stopped
 
