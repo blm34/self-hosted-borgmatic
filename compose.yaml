@@ -1,6 +1,6 @@
 services:
   borgmatic:
-    image: ghcr.io/borgmatic-collective/borgmatic
+    image: ghcr.io/borgmatic-collective/borgmatic:2.1.6
     container_name: borgmatic
 
     volumes:
@@ -21,6 +21,11 @@ services:
       - ./borg_config:/root/.config/borg
       - ./borg_cache:/root/.cache/borg
       - ./logs:/var/log/borgmatic
+
+    labels:
+      wud.trigger.include: ntfy.local,dockercompose.borgmatic
+      wud.tag.include: ^\d+\.\d+\.\d+$
+      wud.compose.file: /wud/borgmatic/compose.yaml
 
     environment:
       TZ: 'Europe/London'
